@@ -1,7 +1,7 @@
 export const CDN_URL ='https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_660/';
 
 
-export const LOGO_URL ="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSGa8JxsgVoSX_rSUjYmrgYnm_UjJdDg1BDwQ&s";
+export const LOGO_URL ="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRivsL6rLFw9cIdKtwNFT4HeFNxIg6hCFxOyA&s";
 
 
 export const MENU_API =

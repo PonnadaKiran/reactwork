@@ -1,13 +1,14 @@
-import React,{lazy,Suspense} from "react";
+import React,{lazy,Suspense,useContext,useState,useEffect} from "react";
 import ReactDOM from "react-dom/client";
 import "../index.css";
 import Header from "./components/Header";
 import Body from "./components/Body";
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
-import About from "./components/About";
+// import About from "./components/About";
 import Contact from "./components/Contact";
 import Error from "./components/Error";
 import RestaurantMenu from "./components/RestaurantMenu";
+// import RestaurantCategory from "./components/ResCategory";
 // import Grocery from "./components/Grocery";
 
 //first one is tag and the next is attribute, the last is children
@@ -91,15 +92,37 @@ components for food ordering app
  */
 
 const Grocery=lazy(()=>import('./components/Grocery'))
+const About=lazy(()=>import('./components/About'))
+
+import UserContext from "./utils/UserContext";
+
+import {Provider} from 'react-redux';
+import Cart from "./components/Cart";
+import appStore from './utils/appStore';
 
 
 
 const App=()=>{
+
+    const [userName,setUserName]=useState();
+
+    useEffect(()=>{
+        const data={
+            name:"Joe Root"
+        }
+
+        setUserName(data.userName)
+    },[]);
+
     return(
-        <div className="app">
-            <Header/>
-            <Outlet/>
-        </div>
+        <Provider store={appStore}>
+            <UserContext.Provider value={{loggedInUser:userName,setUserName}}>
+                <div className="app">
+                    <Header/>
+                    <Outlet/>
+                </div>
+            </UserContext.Provider>
+        </Provider>
     )
 }
 
@@ -114,7 +137,9 @@ const appRouter=createBrowserRouter([
             },
             {
                 path:"/about",
-                element:<About/>
+                element:<Suspense>
+                    <About/>
+                </Suspense>
             },
             {
                 path:"/contact",
@@ -131,6 +156,10 @@ const appRouter=createBrowserRouter([
                         <Grocery/>
                     </Suspense>
                 )
+            },
+            {
+                path:'/cart',
+                element:<Cart/>
             }
         ],
         errorElement:<Error/>
